@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css?family=Comfortaa|Patua+One");
+
+/*Typography
+--------------------------------------------------------------*/
+body,
+button,
+input,
+select,
+textarea {
+  color: #404040;
+  font-family: "Comfortaa", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: "Patua One", serif;
+  letter-spacing: 2px;
+}
+
+/* Utility */
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Log Form */
+
+.column.submit-button {
+  align-self: flex-end;
+}
+
+.button.submit {
+  background-color: #404040;
+  color: #fff;
+}
+
+.button.submit:hover {
+  background: #eee;
+  color: #333;
+}
+
+.modal {
+  display: flex;
+  transform: scale(0);
+}
+
+.modal.is-active {
+  transform: scale(1);
+  transition: all .1s ease;
+}
+
+/* Log Entry List */
+
+.entry {
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.options {
+  text-align: end;
+}
+
+.options .button {
+  border: none;
+}
+
+.dropdown-content {
+  text-align: start;
+}
+
+.options-button {
+  color: #000;
+  font-size: 2em;
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
+/* Footer */
+
+.footer .container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

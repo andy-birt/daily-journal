@@ -1,0 +1,49 @@
+<li id="journal-id">
+  <article class="entry">
+    <div class="columns">
+      <div class="column is-2">
+        <h2 class="title"><a href="#">Oct 11 2021</a></h2>
+        <h3 class="subtitle">Confident</h3>
+        <div class="tags">
+          <span class="tag is-primary is-light">Git</span>
+          <span class="tag is-link is-light">HTML</span>
+          <span class="tag is-info is-light">JavaScript</span>
+          <span class="tag is-success is-light">React</span>
+          <span class="tag is-warning is-light">CSS</span>
+          <span class="tag is-danger is-light">C#</span>
+        </div>
+      </div>
+      <div class="column is-9">
+        <p>
+          La- da- da- da- dah. Just be happy. In this world, 
+          everything can be happy. And just raise cain. 
+          We're not trying to teach you a thing to copy. 
+          We're just here to teach you a technique, then let you loose 
+          into the world. That's what makes life fun. That you can make 
+          these decisions. That you can create the world that you want.
+          La- da- da- da- dah. Just be happy. In this world, 
+          everything can be happy. And just raise cain. 
+          We're not trying to teach you a thing to copy. 
+          We're just here to teach you a technique, then let you loose 
+          into the world. That's what makes life fun. That you can make 
+          these decisions. That you can create the world that you want.
+        </p>
+      </div>
+      <div class="column options">
+        <div class="dropdown is-right">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+              <span class="pagination-ellipsis options-button">&hellip;</span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item">Edit</a>
+              <a href="#" class="dropdown-item">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</li>
