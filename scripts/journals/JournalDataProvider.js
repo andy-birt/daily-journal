@@ -22,6 +22,13 @@ const journalData = [
     concepts: ["JavaScript", "Jest", "Unit Testing"],
     entry: "I did the sowing chapter for Modern Farm. It was relatively easy to do, however, today has been exhausting looking for my tiny little nuances. For example, I spent a little bit of time getting the plant seeds function to populate the plant array simply because I used lowercase letters in my switch statement rather than capitalizing the seed names and that took some time for me to catch. Also I was helping my teammates with their projects where I almost missed that they forgot to import and call their component function in the main js module. What a way to end the week.",
     mood: "Unsure"
+  },
+  {
+    id: 4,
+    date: "Oct 21 2021",
+    concepts: ["HTML", "CSS", "JavaScript"],
+    entry: "It's been a while since my last update. I was assigned to team Red Jaguar to reproduce something similar to the previous group project of travel brochure except this time the task was to automate much of the html building process into separate JS files. One of our teammates was out for most of the project due to some technical issues however, with our project structure, he was able to finish his page within the first hour or so of class and we managed to finish the project and have retro before lunch. I think it went relatively well! I just finished our daily assignment of taking some data provided by Sarah and creating components out of that data and I read tomorrows assignment, Glassdale Intro",
+    mood: "Stoked"
   }
 ];
 
