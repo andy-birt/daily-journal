@@ -1,25 +1,61 @@
 import { saveJournalEntry } from "./JournalDataProvider.js";
+import { JournalList } from "./JournalList.js";
 
 const newLog = (e) => {
-  document.querySelector('.journal-form-container').innerHTML = JournalForm();
-  document.querySelector('.modal').classList.add('is-active');
+  const formModal = document.querySelector('.modal');
+  formModal.classList.add('is-active');
   
   const button = document.querySelector('.submit');
   button.addEventListener('click', e => {
     if (e.target.value === "Go For It") {
       e.preventDefault();
 
-      const dld = document.querySelector('#dev-log-date').value;
-
+      // Journal Form ids
+      
       // dev-log-date
+      const devLogDate = document.querySelector('#dev-log-date');
+
       // dev-log-concepts
+      const devLogConcepts = document.querySelector('#dev-log-concepts');
+
       // dev-log-entry
+      const devLogEntry = document.querySelector('#dev-log-entry');
+
       // dev-log-mood
+      const devLogMood = document.querySelector('#dev-log-mood');
+      
+      // Set up the new entry body
+      const dld = devLogDate.value.split('-');
+      const date = new Date(dld[0], dld[1] - 1, dld[2])
+      .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})
+      .split(',').join('');
 
+      const concepts = devLogConcepts.value.split(',');
+      const entry = devLogEntry.value;
+      const mood = devLogMood.value.charAt(0).toUpperCase() + devLogMood.value.slice(1);
+      
+      // Initialize new entry
+      const newEntry = {
+        date,
+        concepts,
+        entry,
+        mood
+      };
 
-      const entryDate = new Date(dld)
-      console.log(dld)
-      // console.log(entryDate.toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"}).split(',').join(''))
+      // Check for validity
+      if (date === 'Invalid Date' || concepts[0] === '' || entry === '') {
+        alert('Please enter valid values');
+      } else {
+        devLogDate.value = '';
+        devLogConcepts.value = '';
+        devLogEntry.value = '';
+
+        formModal.classList.remove('is-active');
+
+        saveJournalEntry(newEntry)
+        .then(JournalList);
+
+      }
     }
   });
   
@@ -109,3 +145,5 @@ export const JournalForm = () => {
   </div>
   `;
 }
+
+document.querySelector('.journal-form-container').innerHTML = JournalForm();
