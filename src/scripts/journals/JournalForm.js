@@ -4,6 +4,10 @@ import { JournalList } from "./JournalList.js";
 const newLog = (e) => {
   const formModal = document.querySelector('.modal');
   formModal.classList.add('is-active');
+
+  document.querySelector('.modal-background').addEventListener('click', e => {
+    formModal.classList.remove('is-active');
+  });
   
   const button = document.querySelector('.submit');
   button.addEventListener('click', e => {

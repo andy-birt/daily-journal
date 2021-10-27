@@ -20,6 +20,13 @@ export const JournalList = () => {
         el.className = "dropdown is-right is-active" :
         el.className = "dropdown is-right";
     }
+
+    const closeOptions = () => {
+      document.querySelectorAll('.dropdown.is-right.is-active')
+      .forEach( el => {
+        el.classList.toggle('is-active');
+      });
+    }
     
     const journalEntries = useJournalEntries().sort((a, b) => b.id - a.id);
     const el = document.querySelector(".entries");
@@ -31,6 +38,7 @@ export const JournalList = () => {
     const dropdownButtons = document.querySelectorAll('.dropdown');
     for (const button of dropdownButtons) {
       button.addEventListener('click', optionClick);
+      button.addEventListener('focusout', closeOptions);
     }
 
   });
