@@ -23,3 +23,9 @@ export const saveJournalEntry = entry => {
   })
   .then(getJournalEntries);
 }
+
+export const deleteJournalEntry = entryID => {
+  return fetch(`http://localhost:8088/entries/${entryID}`, {
+    method: "DELETE"
+  });
+}

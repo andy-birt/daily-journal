@@ -1,3 +1,20 @@
+import { deleteJournalEntry } from "./JournalDataProvider.js";
+import { JournalList } from "./JournalList.js";
+
+const deleteEntryEvent = document.querySelector('.entries');
+
+deleteEntryEvent.addEventListener('click', e => {
+  if (e.target.id.startsWith('deleteEntry')) {
+    if (confirm('Are you sure you want to delete entry?')){
+
+      const entryID = e.path[0].id.split('--')[1];
+
+      deleteJournalEntry(entryID)
+      .then(JournalList)
+    }
+  }
+});
+
 // Concept List
 
 const Concepts = (concept) => {
@@ -39,7 +56,7 @@ export const Journal = (journal) => {
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
               <div class="dropdown-content">
                 <a href="#" class="dropdown-item">Edit</a>
-                <a href="#" class="dropdown-item">Delete</a>
+                <a href="#" id="deleteEntry--${journal.id}" class="dropdown-item">Delete</a>
               </div>
             </div>
           </div>

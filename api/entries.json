@@ -46,11 +46,23 @@
       "date": "Oct 26 2021",
       "concepts": [
         "JavaScript",
-        " JSON"
+        "JSON"
       ],
       "entry": "We have covered using json-server as a prototype database which we can perform CRUD (create, read, update, delete) operations with our journal entries. This is my first post since using json-server rather than hard-coding into my data-provider array. Also, I have some work to do on my resume.",
       "mood": "Stoked",
       "id": 5
+    },
+    {
+      "date": "Oct 26 2021",
+      "concepts": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "JSON"
+      ],
+      "entry": "I've had some trouble targeting certain elements in my journal list which I have corrected by placing all of my selectors and handlers within the promise function that gets the journal entries so I can eventually edit or delete entries",
+      "mood": "Stoked",
+      "id": 6
     }
   ]
 }
