@@ -21,7 +21,7 @@ export const JournalList = () => {
         el.className = "dropdown is-right";
     }
     
-    const journalEntries = useJournalEntries();
+    const journalEntries = useJournalEntries().sort((a, b) => b.id - a.id);
     const el = document.querySelector(".entries");
     
     journalEntries.forEach(entry => html += Journal(entry));
