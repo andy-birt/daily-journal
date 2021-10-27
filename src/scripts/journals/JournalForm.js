@@ -30,7 +30,7 @@ const newLog = (e) => {
       .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})
       .split(',').join('');
 
-      const concepts = devLogConcepts.value.split(',');
+      const concepts = devLogConcepts.value.split(', ');
       const entry = devLogEntry.value;
       const mood = devLogMood.value.charAt(0).toUpperCase() + devLogMood.value.slice(1);
       
