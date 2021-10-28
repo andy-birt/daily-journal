@@ -1,16 +1,22 @@
-import { deleteJournalEntry } from "./JournalDataProvider.js";
+import { deleteJournalEntry, useJournalEntries } from "./JournalDataProvider.js";
+import { JournalForm } from "./JournalForm.js";
 import { JournalList } from "./JournalList.js";
 
-const deleteEntryEvent = document.querySelector('.entries');
+const entryEvent = document.querySelector('.entries');
 
-deleteEntryEvent.addEventListener('click', e => {
+entryEvent.addEventListener('click', e => {
+  
+  const entryID = e.path[0].id.split('--')[1];
+  if (e.target.id.startsWith('editEntry')) {
+    const entry = useJournalEntries().filter( entry => entry.id === entryID );
+    console.log(entry.date)
+    JournalForm(entry);
+  }
+
   if (e.target.id.startsWith('deleteEntry')) {
     if (confirm('Are you sure you want to delete entry?')){
-
-      const entryID = e.path[0].id.split('--')[1];
-
       deleteJournalEntry(entryID)
-      .then(JournalList)
+      .then(JournalList);
     }
   }
 });
@@ -55,7 +61,7 @@ export const Journal = (journal) => {
             </div>
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
               <div class="dropdown-content">
-                <a href="#" class="dropdown-item">Edit</a>
+                <a href="#" id="editEntry--${journal.id}" class="dropdown-item">Edit</a>
                 <a href="#" id="deleteEntry--${journal.id}" class="dropdown-item">Delete</a>
               </div>
             </div>

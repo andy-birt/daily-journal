@@ -1,6 +1,8 @@
 import { saveJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
+const newEntry = {id: '', date: Date.now(), concepts: [''], entry: '', mood: ''};
+
 const newLog = (e) => {
   const formModal = document.querySelector('.modal');
   formModal.classList.add('is-active');
@@ -47,7 +49,7 @@ const newLog = (e) => {
       };
 
       // Check for validity
-      if (date === 'Invalid Date' || concepts[0] === '' || entry === '') {
+      if (date === 'Invalid Date' || concepts[0] === '' || entry === '' || mood === '') {
         alert('Please enter valid values');
       } else {
         devLogDate.value = '';
@@ -68,7 +70,10 @@ const newLog = (e) => {
 const newLogModal = document.querySelector('.button.new-log');
 newLogModal.addEventListener('click', newLog);
 
-export const JournalForm = () => {
+export const JournalForm = (entry = newEntry) => {
+
+  const action = entry.id !== '' ? 'Edit' : 'Save';
+
   return `
   <div class="modal">
     <div class="modal-background"></div>
@@ -88,7 +93,7 @@ export const JournalForm = () => {
             <fieldset class="field">
               <label class="label" for="dev-log-date">Date</label>
               <div class="control">
-                <input class="input" type="date" name="dev-log-date" id="dev-log-date">
+                <input class="input" type="date" name="dev-log-date" id="dev-log-date" value="${new Date(entry.date).toISOString().slice(0, 10)}">
               </div>
             </fieldset>
 
@@ -99,7 +104,7 @@ export const JournalForm = () => {
             <fieldset class="field">
               <label class="label" for="dev-log-concepts">Concepts Covered</label>
               <div class="control">
-                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts">
+                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts.join(', ')}">
               </div>
             </fieldset>
 
@@ -112,7 +117,7 @@ export const JournalForm = () => {
         <fieldset class="field">
           <label class="label" for="dev-log-entry">Log Entry</label>
           <div class="control">
-            <textarea class="textarea" name="dev-log-entry" id="dev-log-entry" cols="30" rows="10"></textarea>
+            <textarea class="textarea" name="dev-log-entry" id="dev-log-entry" cols="30" rows="10">${entry.entry}</textarea>
           </div>
         </fieldset>
 
@@ -125,7 +130,8 @@ export const JournalForm = () => {
           <fieldset class="field">
             <label class="label" for="dev-log-mood">Current Mood</label>
             <div class="select is-fullwidth">
-              <select name="dev-log-mood" id="dev-log-mood">
+              <select name="dev-log-mood" id="dev-log-mood" value="${entry.mood}">
+                <option value="''">How are you feeling?</option>
                 <option value="stoked">Stoked</option>
                 <option value="confident">Confident</option>
                 <option value="meh">Meh</option>
@@ -139,7 +145,7 @@ export const JournalForm = () => {
           
           <!-- Submit form -->
           <div class="column submit-button">
-            <input type="submit" class="button submit is-fullwidth" value="Go For It">
+            <input type="submit" class="button submit is-fullwidth" value="${action} Entry">
           </div>
           
 
