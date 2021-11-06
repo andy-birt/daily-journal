@@ -4,6 +4,15 @@
 import { useJournalEntries, getJournalEntries } from "./JournalDataProvider.js";
 import { Journal } from "./Journal.js";
 
+// The following is basically handling events for buttons
+const optionClick = e => {
+
+  const el = e.path.filter(x => x.className === 'dropdown is-right' || x.className === 'dropdown is-right is-active')[0];
+  
+  el.className === "dropdown is-right" ? 
+    el.className = "dropdown is-right is-active" :
+    el.className = "dropdown is-right";
+}
 
 export const JournalList = () => {
   
@@ -11,24 +20,7 @@ export const JournalList = () => {
 
     let html = '';
     
-    // The following is basically handling events for buttons
-    const optionClick = e => {
-
-      const el = e.path.filter(x => x.className === 'dropdown is-right' || x.className === 'dropdown is-right is-active')[0];
-      
-      el.className === "dropdown is-right" ? 
-        el.className = "dropdown is-right is-active" :
-        el.className = "dropdown is-right";
-    }
-
-    const closeOptions = () => {
-      document.querySelectorAll('.dropdown.is-right.is-active')
-      .forEach( el => {
-        el.classList.toggle('is-active');
-      });
-    }
-    
-    const journalEntries = useJournalEntries().sort((a, b) => b.id - a.id);
+    const journalEntries = useJournalEntries().sort((a, b) => new Date(b.date) - new Date(a.date));
     const el = document.querySelector(".entries");
     
     journalEntries.forEach(entry => html += Journal(entry));
@@ -38,7 +30,6 @@ export const JournalList = () => {
     const dropdownButtons = document.querySelectorAll('.dropdown');
     for (const button of dropdownButtons) {
       button.addEventListener('click', optionClick);
-      button.addEventListener('focusout', closeOptions);
     }
 
   });

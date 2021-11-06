@@ -43,14 +43,14 @@
       "mood": "Stoked"
     },
     {
-      "date": "Oct 26 2021",
+      "id": 5,
+      "entry": "We have covered using json-server as a prototype database which we can perform CRUD (create, read, update, delete) operations with our journal entries. This is my first post since using json-server rather than hard-coding into my data-provider array. Also, I have some work to do on my resume.\n\nUpdate: Testing out the update feature. If you see this then it works.",
+      "date": "Nov 5 2021",
       "concepts": [
         "JavaScript",
         "JSON"
       ],
-      "entry": "We have covered using json-server as a prototype database which we can perform CRUD (create, read, update, delete) operations with our journal entries. This is my first post since using json-server rather than hard-coding into my data-provider array. Also, I have some work to do on my resume.",
-      "mood": "Stoked",
-      "id": 5
+      "mood": "Stoked"
     },
     {
       "date": "Oct 26 2021",
@@ -63,6 +63,16 @@
       "entry": "I've had some trouble targeting certain elements in my journal list which I have corrected by placing all of my selectors and handlers within the promise function that gets the journal entries so I can eventually edit or delete entries",
       "mood": "Stoked",
       "id": 6
+    },
+    {
+      "id": 7,
+      "entry": "It's been a while since my last post. A little over a week. I was working on a group project 'Holiday Road' and was assigned to the 'mashed-potatoes' group. We used the tools acquired throughout the course to put this project together but with some twists. This project used different apis. Four, not including the one we were running ourselves via json-server. It was a really fun project and I got to put myself to the test. I got the parks api up and running and Steven got the weather api going. We integrated the data so that the weather api was using gps coords of the parks locations when one was selected so that it would display a five day forecast. I helped him with putting together a multiselect for attractions and eateries even though we didn't use them when saving itineraries but had we more time we could've made that happen. No biggie. Amanda made the ui presentable. Jonah worked on itineraries and I put together the search feature. In the end we only missed two stretch goals which I guess it's not important how many we didn't get rather how many we did get. Also I made some nice spaghetti code. Like Todd Howards likes to say, \"it just works\". Maybe next week I'll get to catch up on some of the other solo projects. I'm looking forward to the next group project, though also nervous because you never know what can go wrong. I may be working with totally different people from before and the next project is considered difficult according to Sarah. I'm still up for the challenge though.",
+      "date": "Nov 6 2021",
+      "concepts": [
+        "JavaScript",
+        "JSON"
+      ],
+      "mood": "Confident"
     }
   ]
 }

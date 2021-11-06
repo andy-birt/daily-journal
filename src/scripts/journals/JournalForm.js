@@ -1,64 +1,69 @@
-import { saveJournalEntry } from "./JournalDataProvider.js";
+import { saveJournalEntry, updateJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
-const newEntry = {id: '', date: Date.now(), concepts: [''], entry: '', mood: ''};
+const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [''], entry: '', mood: 'undefined'};
 
-const newLog = (e) => {
+const saveEntry = (e) => {
+
+  // When 'New Log' button is clicked a modal will take up the screen
   const formModal = document.querySelector('.modal');
   formModal.classList.add('is-active');
+  
+  // Assume the user wants all fields cleared to create a new entry
+  setJournalFormFields(newEntry);
 
-  document.querySelector('.modal-background').addEventListener('click', e => {
+  // While modal is active, listen for a click in the darkened area which will close the modal
+  document.querySelector('.modal-background').addEventListener('click', () => {
     formModal.classList.remove('is-active');
   });
+
   
+  // When user clicks on 'Save/Edit Entry'
   const button = document.querySelector('.submit');
   button.addEventListener('click', e => {
-    if (e.target.value === "Go For It") {
+    if (e.target.value.startsWith('Save')) {
+      // Prevent Default behavior for a form to be submitted
+      // In this case to refresh the page
+      // Handle the form submission using AJAX request
       e.preventDefault();
 
-      // Journal Form ids
-      
-      // dev-log-date
-      const devLogDate = document.querySelector('#dev-log-date');
+      const entryFields = getJournalFormFields();
 
-      // dev-log-concepts
-      const devLogConcepts = document.querySelector('#dev-log-concepts');
 
-      // dev-log-entry
-      const devLogEntry = document.querySelector('#dev-log-entry');
-
-      // dev-log-mood
-      const devLogMood = document.querySelector('#dev-log-mood');
       
       // Set up the new entry body
-      const dld = devLogDate.value.split('-');
-      const date = new Date(dld[0], dld[1] - 1, dld[2])
-      .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})
-      .split(',').join('');
+      // Default form date format yyyy-MM-dd
+      // In the future don't format date for the api
+      // Save it as it is then just format it on the front end
+      const dld = entryFields.date.split('-');          //-----------------------------  returns ['yyyy', 'MM', 'dd']
+      entryFields.date = new Date(dld[0], dld[1] - 1, dld[2]) //-----------------------------  create new date from submitted form
+      .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})// format the date like we did in Glassdale this time using options in the second argument return 'Oct 31, 2021' for example...
+      .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021' 
 
-      const concepts = devLogConcepts.value.split(', ');
-      const entry = devLogEntry.value;
-      const mood = devLogMood.value.charAt(0).toUpperCase() + devLogMood.value.slice(1);
-      
-      // Initialize new entry
-      const newEntry = {
-        date,
-        concepts,
-        entry,
-        mood
-      };
+      // The form is a string where the user should separate each concept with a comma which will end up as an array ['HTML', 'CSS', 'JavaScript']
+      entryFields.concepts = entryFields.concepts.split(', ');
+
+      // Just get the text in the textarea field, nothing special
+      const entry = entryFields.entry;
+
+      // The Mood value is capitalized 'foo' would become 'Foo'
+      entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
 
       // Check for validity
-      if (date === 'Invalid Date' || concepts[0] === '' || entry === '' || mood === '') {
+      if (entryFields.date === 'Invalid Date' || entryFields.concepts[0] === '' || entry === '' || entryFields.mood === '') {
+        
+        // TODO: Use something other than an alert. Maybe text field indicators or notification
         alert('Please enter valid values');
       } else {
-        devLogDate.value = '';
-        devLogConcepts.value = '';
-        devLogEntry.value = '';
 
+        // Once the entry is created clear the fields
+        setJournalFormFields(newEntry);
+
+        // Tuck away the journal form
         formModal.classList.remove('is-active');
 
-        saveJournalEntry(newEntry)
+        // This part should look familiar
+        saveJournalEntry(entryFields)
         .then(JournalList);
 
       }
@@ -67,14 +72,62 @@ const newLog = (e) => {
   
 }
 
+
 const newLogModal = document.querySelector('.button.new-log');
-newLogModal.addEventListener('click', newLog);
+newLogModal.addEventListener('click', saveEntry);
 
-export const JournalForm = (entry = newEntry) => {
 
-  const action = entry.id !== '' ? 'Edit' : 'Save';
+export const setJournalFormFields = (journal) => {
+  
+  const { id, entry, date, concepts, mood } = journal;
+  const button = document.querySelector('.button');
+  
+  // dev-log-id
+  document.querySelector('#dev-log-id').value = id;
+  
+  // dev-log-entry
+  document.querySelector('#dev-log-entry').value = entry;
+  
+  // dev-log-date
+  document.querySelector('#dev-log-date').value = date;
 
-  return `
+  // dev-log-concepts
+  document.querySelector('#dev-log-concepts').value = concepts.join(', ');
+
+  // dev-log-mood
+  document.querySelector(`#dev-log-mood option[value=${mood.toLowerCase()}]`).selected = true;
+
+  if (id !== '') button.value = "Edit Entry";
+  else button.value = "Save Entry";
+
+}
+
+export const getJournalFormFields = () => {
+  return {
+
+    // dev-log-id
+    id: document.querySelector('#dev-log-id').value,
+    
+    // dev-log-entry
+    entry: document.querySelector('#dev-log-entry').value,
+    
+    // dev-log-date
+    date: document.querySelector('#dev-log-date').value,
+
+    // dev-log-concepts
+    concepts: document.querySelector('#dev-log-concepts').value,
+
+    // dev-log-mood
+    mood: document.querySelector('#dev-log-mood').value
+
+  };
+}
+
+export const JournalForm = () => {
+
+  const entry = newEntry;
+
+  document.querySelector('.journal-form-container').innerHTML = `
   <div class="modal">
     <div class="modal-background"></div>
     <!-- Form component -->
@@ -130,8 +183,8 @@ export const JournalForm = (entry = newEntry) => {
           <fieldset class="field">
             <label class="label" for="dev-log-mood">Current Mood</label>
             <div class="select is-fullwidth">
-              <select name="dev-log-mood" id="dev-log-mood" value="${entry.mood}">
-                <option value="''">How are you feeling?</option>
+              <select name="dev-log-mood" id="dev-log-mood">
+                <option value="undefined">How are you feeling?</option>
                 <option value="stoked">Stoked</option>
                 <option value="confident">Confident</option>
                 <option value="meh">Meh</option>
@@ -142,10 +195,12 @@ export const JournalForm = (entry = newEntry) => {
             </div>
             
           </fieldset>
+
+          <input id="dev-log-id" type="text" value="${entry.id}" hidden>
           
           <!-- Submit form -->
           <div class="column submit-button">
-            <input type="submit" class="button submit is-fullwidth" value="${action} Entry">
+            <input type="submit" class="button submit is-fullwidth" value="Save Entry">
           </div>
           
 
@@ -155,5 +210,3 @@ export const JournalForm = (entry = newEntry) => {
   </div>
   `;
 }
-
-document.querySelector('.journal-form-container').innerHTML = JournalForm();
