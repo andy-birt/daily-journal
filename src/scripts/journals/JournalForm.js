@@ -9,6 +9,7 @@ const createEntry = (e) => {
   setJournalFormFields(newEntry);
 
   const formModal = document.querySelector('.modal');
+  const conceptsArea = document.querySelector('#dev-log-concepts');
   const button = document.querySelector('.submit');
   
 
@@ -38,7 +39,42 @@ const createEntry = (e) => {
     }
   });
 
-  
+  // As user types out concepts a comma will make a badge out of the concept typed
+  // The tag will have a delete button to remove tag from the concept list
+  // The delete button will not work yet, however
+  conceptsArea.addEventListener('keyup', e => {
+    // Currently, this will not allow user to save
+    // This will be fixed soon
+    // It's cool to see how this works
+    if (e.key === ',') {
+      // Take the value before the comma
+      // It will be a concept
+      const [concept] = e.target.value.split(',');
+      
+      // Create a wrap element for the tag 
+      const tagBlock = document.createElement('span');
+
+      // This is the tag for the concept typed
+      const conceptTag = document.createElement('span');
+
+      // Make a delete button to remove concept
+      const deleteButton = document.createElement('button');
+
+      // Set class names for each element
+      tagBlock.className = 'block';
+      conceptTag.className = 'tag is-light mt-2 mr-2';
+      deleteButton.className = 'delete is-small';
+
+      // Remove text from input element
+      e.target.value = '';
+      
+      // Append newly created elements underneath the concept input area 
+      conceptTag.append(concept, deleteButton);
+      tagBlock.append(conceptTag)
+      e.target.parentNode.append(tagBlock)
+    }
+  });
+ 
   // When user clicks on 'Save/Edit Entry'
   button.addEventListener('click', e => {
     if (e.target.value.startsWith('Save')) {
