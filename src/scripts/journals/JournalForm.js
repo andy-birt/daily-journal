@@ -1,35 +1,52 @@
-import { saveJournalEntry, updateJournalEntry } from "./JournalDataProvider.js";
+import { saveJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
 const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [''], entry: '', mood: 'undefined'};
 
 const saveEntry = (e) => {
 
-  // When 'New Log' button is clicked a modal will take up the screen
-  const formModal = document.querySelector('.modal');
-  formModal.classList.add('is-active');
-  
   // Assume the user wants all fields cleared to create a new entry
   setJournalFormFields(newEntry);
+
+  const formModal = document.querySelector('.modal');
+  const button = document.querySelector('.submit');
+  
+
+  // Disable the save button by default
+  button.disabled = true;
+
+  // When 'New Log' button is clicked a modal will take up the screen
+  formModal.classList.add('is-active');
 
   // While modal is active, listen for a click in the darkened area which will close the modal
   document.querySelector('.modal-background').addEventListener('click', () => {
     formModal.classList.remove('is-active');
   });
 
+  // Revalidate form when values change
+  formModal.addEventListener('change', e => {
+    // Check for form value validity
+    const entryFields = getJournalFormFields();
+    if (entryFields.date === 'Invalid Date' || entryFields.concepts === '' || entryFields.entry === '' || entryFields.mood === 'undefined' || e.target.value === '') {
+      
+      button.disabled = true;
+      
+    } else {
+
+      button.disabled = false;
+
+    }
+  });
+
   
   // When user clicks on 'Save/Edit Entry'
-  const button = document.querySelector('.submit');
   button.addEventListener('click', e => {
     if (e.target.value.startsWith('Save')) {
       // Prevent Default behavior for a form to be submitted
       // In this case to refresh the page
       // Handle the form submission using AJAX request
       e.preventDefault();
-
       const entryFields = getJournalFormFields();
-
-
       
       // Set up the new entry body
       // Default form date format yyyy-MM-dd
@@ -43,33 +60,21 @@ const saveEntry = (e) => {
       // The form is a string where the user should separate each concept with a comma which will end up as an array ['HTML', 'CSS', 'JavaScript']
       entryFields.concepts = entryFields.concepts.split(', ');
 
-      // Just get the text in the textarea field, nothing special
-      const entry = entryFields.entry;
-
       // The Mood value is capitalized 'foo' would become 'Foo'
       entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
 
-      // Check for validity
-      if (entryFields.date === 'Invalid Date' || entryFields.concepts[0] === '' || entry === '' || entryFields.mood === '') {
-        
-        // TODO: Use something other than an alert. Maybe text field indicators or notification
-        alert('Please enter valid values');
-      } else {
+      // Once the entry is created clear the fields
+      setJournalFormFields(newEntry);
 
-        // Once the entry is created clear the fields
-        setJournalFormFields(newEntry);
+      // Tuck away the journal form
+      formModal.classList.remove('is-active');
 
-        // Tuck away the journal form
-        formModal.classList.remove('is-active');
+      // This part should look familiar
+      saveJournalEntry(entryFields)
+      .then(JournalList);
 
-        // This part should look familiar
-        saveJournalEntry(entryFields)
-        .then(JournalList);
-
-      }
     }
   });
-  
 }
 
 

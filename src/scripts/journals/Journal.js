@@ -2,7 +2,7 @@ import { deleteJournalEntry, useJournalEntries, updateJournalEntry } from "./Jou
 import { setJournalFormFields, getJournalFormFields } from "./JournalForm.js";
 import { JournalList } from "./JournalList.js";
 
-const newEntry = {id: '', date: new Date().toISOString().split('T')[0], concepts: [''], entry: '', mood: 'undefined'};
+const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [''], entry: '', mood: 'undefined'};
 
 const entryEvent = document.querySelector('.entries');
 
@@ -13,10 +13,27 @@ entryEvent.addEventListener('click', e => {
     const entry = useJournalEntries().find( entry => entry.id.toString() === entryID );
     entry.date = new Date().toLocaleDateString('en-CA');
 
+    const button = document.querySelector('.submit');
+
     setJournalFormFields(entry);
 
+    button.disabled = true;
     
     document.querySelector('.modal').classList.add('is-active');
+
+    document.querySelector('.modal').addEventListener('change', e => {
+      // Check for form value validity
+      const entryFields = getJournalFormFields();
+      if (entryFields.date === 'Invalid Date' || entryFields.concepts === '' || entryFields.entry === '' || entryFields.mood === 'undefined' || e.target.value === '') {
+        
+        button.disabled = true;
+        
+      } else {
+
+        button.disabled = false;
+
+      }
+    });
 
     document.querySelector('.submit').addEventListener('click', e => {
       if (e.target.value.startsWith('Edit')) {
@@ -24,11 +41,8 @@ entryEvent.addEventListener('click', e => {
         // In this case to refresh the page
         // Handle the form submission using AJAX request
         e.preventDefault();
-  
         const entryFields = getJournalFormFields();
   
-  
-        
         // Set up the new entry body
         // Default form date format yyyy-MM-dd
         // In the future don't format date for the api
@@ -41,30 +55,19 @@ entryEvent.addEventListener('click', e => {
         // The form is a string where the user should separate each concept with a comma which will end up as an array ['HTML', 'CSS', 'JavaScript']
         entryFields.concepts = entryFields.concepts.split(', ');
   
-        // Just get the text in the textarea field, nothing special
-        const entry = entryFields.entry;
-  
         // The Mood value is capitalized 'foo' would become 'Foo'
         entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
-  
-        // Check for validity
-        if (entryFields.date === 'Invalid Date' || entryFields.concepts[0] === '' || entry === '' || entryFields.mood === '') {
-          
-          // TODO: Use something other than an alert. Maybe text field indicators or notification
-          alert('Please enter valid values');
-        } else {
-  
-          // Once the entry is created clear the fields
-          setJournalFormFields(newEntry);
-  
-          // Tuck away the journal form
-          document.querySelector('.modal').classList.remove('is-active');
+   
+        // Once the entry is created clear the fields
+        setJournalFormFields(newEntry);
 
-          // This part should look familiar
-          updateJournalEntry(entryFields)
-          .then(JournalList);
-  
-        }
+        // Tuck away the journal form
+        document.querySelector('.modal').classList.remove('is-active');
+
+        // This part should look familiar
+        updateJournalEntry(entryFields)
+        .then(JournalList);
+         
       }
     });
 
