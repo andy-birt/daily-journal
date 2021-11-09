@@ -100,7 +100,7 @@ export const Journal = (journal) => {
   journal.concepts.forEach(concept => conceptsHTML += Concepts(concept));
 
   return `
-  <li id="journal-${journal.id}">
+  <li id="journal-${journal.id}" class="box">
     <article class="entry">
       <div class="columns">
         <div class="column is-2">
