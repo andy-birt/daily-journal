@@ -3,7 +3,7 @@ import { JournalList } from "./JournalList.js";
 
 const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [''], entry: '', mood: 'undefined'};
 
-const saveEntry = (e) => {
+const createEntry = (e) => {
 
   // Assume the user wants all fields cleared to create a new entry
   setJournalFormFields(newEntry);
@@ -79,7 +79,7 @@ const saveEntry = (e) => {
 
 
 const newLogModal = document.querySelector('.button.new-log');
-newLogModal.addEventListener('click', saveEntry);
+newLogModal.addEventListener('click', createEntry);
 
 
 export const setJournalFormFields = (journal) => {
