@@ -3,6 +3,40 @@ import { JournalList } from "./JournalList.js";
 
 const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [''], entry: '', mood: 'undefined'};
 
+const conceptsEvent = (e) => {
+  // Currently, this will not allow user to save
+  // This will be fixed soon
+  // It's cool to see how this works
+  if (e.key === ',') {
+    // Take the value before the comma
+    // It will be a concept
+    const [concept] = e.target.value.split(',');
+    
+    // Create a wrap element for the tag 
+    const tagBlock = document.createElement('span');
+
+    // This is the tag for the concept typed
+    const conceptTag = document.createElement('span');
+
+    // Make a delete button to remove concept
+    const deleteButton = document.createElement('button');
+
+    // Set class names for each element
+    tagBlock.className = 'block';
+    conceptTag.className = 'tag is-light mt-2 mr-2';
+    deleteButton.className = 'delete is-small';
+
+    // Remove text from input element
+    e.target.value = '';
+    
+    // Append newly created elements underneath the concept input area 
+    conceptTag.append(concept, deleteButton);
+    tagBlock.append(conceptTag);
+    e.target.parentNode.append(tagBlock);
+
+  }
+}
+
 const createEntry = (e) => {
 
   // Assume the user wants all fields cleared to create a new entry
@@ -42,36 +76,20 @@ const createEntry = (e) => {
   // As user types out concepts a comma will make a badge out of the concept typed
   // The tag will have a delete button to remove tag from the concept list
   // The delete button will not work yet, however
-  conceptsArea.addEventListener('keyup', e => {
-    // Currently, this will not allow user to save
-    // This will be fixed soon
-    // It's cool to see how this works
-    if (e.key === ',') {
-      // Take the value before the comma
-      // It will be a concept
-      const [concept] = e.target.value.split(',');
-      
-      // Create a wrap element for the tag 
-      const tagBlock = document.createElement('span');
+  conceptsArea.addEventListener('keyup', conceptsEvent);
 
-      // This is the tag for the concept typed
-      const conceptTag = document.createElement('span');
+  // Handle click events in the form modal for delete buttons
+  formModal.addEventListener('click', e => {
+    // Remove concepts from the entry
+    if (e.target.className === 'delete is-small') {
+      e.preventDefault();
+      e.target.closest('.block').remove();
+    }
 
-      // Make a delete button to remove concept
-      const deleteButton = document.createElement('button');
-
-      // Set class names for each element
-      tagBlock.className = 'block';
-      conceptTag.className = 'tag is-light mt-2 mr-2';
-      deleteButton.className = 'delete is-small';
-
-      // Remove text from input element
-      e.target.value = '';
-      
-      // Append newly created elements underneath the concept input area 
-      conceptTag.append(concept, deleteButton);
-      tagBlock.append(conceptTag)
-      e.target.parentNode.append(tagBlock)
+    // Close the form modal
+    if (e.target.className === 'delete') {
+      e.preventDefault();
+      e.target.closest('.modal').classList.remove('is-active');
     }
   });
  
@@ -194,11 +212,11 @@ export const JournalForm = () => {
           </div>
           <div class="column">
 
-            <!-- Text input form group -->
+            <!-- Concepts input form group -->
             <fieldset class="field">
               <label class="label" for="dev-log-concepts">Concepts Covered</label>
               <div class="control">
-                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts.join(', ')}">
+                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts.join(', ')}" placeholder="Type out concept then ',' to save it" autocomplete="off">
               </div>
             </fieldset>
 
@@ -211,7 +229,7 @@ export const JournalForm = () => {
         <fieldset class="field">
           <label class="label" for="dev-log-entry">Log Entry</label>
           <div class="control">
-            <textarea class="textarea" name="dev-log-entry" id="dev-log-entry" cols="30" rows="10">${entry.entry}</textarea>
+            <textarea class="textarea" name="dev-log-entry" id="dev-log-entry" cols="30" rows="10" placeholder="Talk about the concepts, what did you learn?">${entry.entry}</textarea>
           </div>
         </fieldset>
 
