@@ -1,7 +1,7 @@
 import { saveJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
-const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [''], entry: '', mood: 'undefined'};
+const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [], entry: '', mood: 'undefined'};
 
 const conceptsEvent = (e) => {
   // Currently, this will not allow user to save
@@ -32,7 +32,7 @@ const conceptsEvent = (e) => {
     // Append newly created elements underneath the concept input area 
     conceptTag.append(concept, deleteButton);
     tagBlock.append(conceptTag);
-    e.target.parentNode.append(tagBlock);
+    e.target.nextElementSibling.append(tagBlock);
 
   }
 }
@@ -43,9 +43,12 @@ const createEntry = (e) => {
   setJournalFormFields(newEntry);
 
   const formModal = document.querySelector('.modal');
-  const conceptsArea = document.querySelector('#dev-log-concepts');
+  const conceptsText = document.querySelector('#dev-log-concepts');
+  const conceptsArea = document.querySelector('.entry-concepts');
   const button = document.querySelector('.submit');
-  
+
+  // Remove any badges from concept area
+  conceptsArea.innerHTML = ''; 
 
   // Disable the save button by default
   button.disabled = true;
@@ -76,7 +79,7 @@ const createEntry = (e) => {
   // As user types out concepts a comma will make a badge out of the concept typed
   // The tag will have a delete button to remove tag from the concept list
   // The delete button will not work yet, however
-  conceptsArea.addEventListener('keyup', conceptsEvent);
+  conceptsText.addEventListener('keyup', conceptsEvent);
 
   // Handle click events in the form modal for delete buttons
   formModal.addEventListener('click', e => {
@@ -123,9 +126,10 @@ const createEntry = (e) => {
       // Tuck away the journal form
       formModal.classList.remove('is-active');
 
+      debugger;
       // This part should look familiar
-      saveJournalEntry(entryFields)
-      .then(JournalList);
+      // saveJournalEntry(entryFields)
+      // .then(JournalList);
 
     }
   });
@@ -151,7 +155,33 @@ export const setJournalFormFields = (journal) => {
   document.querySelector('#dev-log-date').value = date;
 
   // dev-log-concepts
-  document.querySelector('#dev-log-concepts').value = concepts.join(', ');
+  // document.querySelector('#dev-log-concepts').value = concepts.join(', ');
+  if (concepts.length) {
+    // Clear the concepts tag area to insert the new ones
+    document.querySelector('.entry-concepts').innerHTML = ''
+
+    // Map over each concept and create the tag elements for the concepts area
+    concepts.map( concept => {
+      // Create a wrap element for the tag 
+      const tagBlock = document.createElement('span');
+  
+      // This is the tag for the concept typed
+      const conceptTag = document.createElement('span');
+  
+      // Make a delete button to remove concept
+      const deleteButton = document.createElement('button');
+  
+      // Set class names for each element
+      tagBlock.className = 'block';
+      conceptTag.className = 'tag is-light mt-2 mr-2';
+      deleteButton.className = 'delete is-small';
+      
+      // Append newly created elements underneath the concept input area 
+      conceptTag.append(concept, deleteButton);
+      tagBlock.append(conceptTag);
+      document.querySelector('.entry-concepts').append(tagBlock)
+    });
+  }
 
   // dev-log-mood
   document.querySelector(`#dev-log-mood option[value=${mood.toLowerCase()}]`).selected = true;
@@ -174,7 +204,7 @@ export const getJournalFormFields = () => {
     date: document.querySelector('#dev-log-date').value,
 
     // dev-log-concepts
-    concepts: document.querySelector('#dev-log-concepts').value,
+    concepts: Array.from(document.querySelectorAll('#dev-log-concepts .block .tag')).map( concept => concept.value ),
 
     // dev-log-mood
     mood: document.querySelector('#dev-log-mood').value
@@ -216,7 +246,8 @@ export const JournalForm = () => {
             <fieldset class="field">
               <label class="label" for="dev-log-concepts">Concepts Covered</label>
               <div class="control">
-                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts.join(', ')}" placeholder="Type out concept then ',' to save it" autocomplete="off">
+                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts}" placeholder="Type out concept then ',' to save it" autocomplete="off">
+                <div class="entry-concepts"></div>
               </div>
             </fieldset>
 
