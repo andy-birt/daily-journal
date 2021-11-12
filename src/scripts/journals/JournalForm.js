@@ -3,14 +3,84 @@ import { JournalList } from "./JournalList.js";
 
 const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [], entry: '', mood: 'undefined'};
 
+const closeModalFromBackgroundClick = (e) => {
+  e.target.parentNode.classList.remove('is-active');
+}
+
+const closeModalByButton = (e) => {
+  // Remove concepts from the entry
+  if (e.target.className === 'delete is-small') {
+    e.preventDefault();
+    e.target.closest('.block').remove();
+  }
+
+  // Close the form modal
+  if (e.target.className === 'delete') {
+    e.preventDefault();
+    e.target.closest('.modal').classList.remove('is-active');
+  }
+}
+
+const formFieldValidation = (e) => {
+  const button = document.querySelector('.submit');
+
+  // Check for form value validity
+  const entryFields = getJournalFormFields();
+  if (entryFields.date === 'Invalid Date' || entryFields.concepts.length < 1 || entryFields.entry === '' || entryFields.mood === 'undefined' || e.target.value === '') {
+    
+    button.disabled = true;
+    
+  } else {
+
+    button.disabled = false;
+
+  }
+}
+
+const saveEvent = (e) => {
+  if (e.target.value.startsWith('Save')) {
+    // Prevent Default behavior for a form to be submitted
+    // In this case to refresh the page
+    // Handle the form submission using AJAX request
+    e.preventDefault();
+    const entryFields = getJournalFormFields();
+    const formModal = document.querySelector('.modal');
+    
+    // Set up the new entry body
+    // Default form date format yyyy-MM-dd
+    // In the future don't format date for the api
+    // Save it as it is then just format it on the front end
+    const dld = entryFields.date.split('-');          //-----------------------------  returns ['yyyy', 'MM', 'dd']
+    entryFields.date = new Date(dld[0], dld[1] - 1, dld[2]) //-----------------------------  create new date from submitted form
+    .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})// format the date like we did in Glassdale this time using options in the second argument return 'Oct 31, 2021' for example...
+    .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021' 
+
+    // The form is a string where the user should separate each concept with a comma which will end up as an array ['HTML', 'CSS', 'JavaScript']
+    // entryFields.concepts = entryFields.concepts.split(', ');
+
+    // The Mood value is capitalized 'foo' would become 'Foo'
+    entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
+
+    // Once the entry is created clear the fields
+    setJournalFormFields(newEntry);
+
+    // Tuck away the journal form
+    formModal.classList.remove('is-active');
+
+    // This part should look familiar
+    saveJournalEntry(entryFields)
+    .then(JournalList);
+  }
+}
+
 const conceptsEvent = (e) => {
-  // Currently, this will not allow user to save
-  // This will be fixed soon
-  // It's cool to see how this works
+  // This condition only executes when the ',' key is pressed
   if (e.key === ',') {
     // Take the value before the comma
     // It will be a concept
     const [concept] = e.target.value.split(',');
+    // Expression is equal to:
+    // const concept = e.target.value.split(',')[0];
     
     // Create a wrap element for the tag 
     const tagBlock = document.createElement('span');
@@ -32,12 +102,12 @@ const conceptsEvent = (e) => {
     // Append newly created elements underneath the concept input area 
     conceptTag.append(concept, deleteButton);
     tagBlock.append(conceptTag);
-    e.target.nextElementSibling.append(tagBlock);
+    document.querySelector('.entry-concepts').append(tagBlock);
 
   }
 }
 
-const createEntry = (e) => {
+const createEntry = () => {
 
   // Assume the user wants all fields cleared to create a new entry
   setJournalFormFields(newEntry);
@@ -57,88 +127,21 @@ const createEntry = (e) => {
   formModal.classList.add('is-active');
 
   // While modal is active, listen for a click in the darkened area which will close the modal
-  document.querySelector('.modal-background').addEventListener('click', () => {
-    formModal.classList.remove('is-active');
-  });
+  document.querySelector('.modal-background').addEventListener('click', closeModalFromBackgroundClick);
 
   // Revalidate form when values change
-  formModal.addEventListener('change', e => {
-    // Check for form value validity
-    const entryFields = getJournalFormFields();
-    if (entryFields.date === 'Invalid Date' || entryFields.concepts === '' || entryFields.entry === '' || entryFields.mood === 'undefined' || e.target.value === '') {
-      
-      button.disabled = true;
-      
-    } else {
-
-      button.disabled = false;
-
-    }
-  });
+  formModal.addEventListener('change', formFieldValidation);
 
   // As user types out concepts a comma will make a badge out of the concept typed
   // The tag will have a delete button to remove tag from the concept list
-  // The delete button will not work yet, however
   conceptsText.addEventListener('keyup', conceptsEvent);
 
   // Handle click events in the form modal for delete buttons
-  formModal.addEventListener('click', e => {
-    // Remove concepts from the entry
-    if (e.target.className === 'delete is-small') {
-      e.preventDefault();
-      e.target.closest('.block').remove();
-    }
-
-    // Close the form modal
-    if (e.target.className === 'delete') {
-      e.preventDefault();
-      e.target.closest('.modal').classList.remove('is-active');
-    }
-  });
+  formModal.addEventListener('click', closeModalByButton);
  
   // When user clicks on 'Save/Edit Entry'
-  button.addEventListener('click', e => {
-    if (e.target.value.startsWith('Save')) {
-      // Prevent Default behavior for a form to be submitted
-      // In this case to refresh the page
-      // Handle the form submission using AJAX request
-      e.preventDefault();
-      const entryFields = getJournalFormFields();
-      
-      // Set up the new entry body
-      // Default form date format yyyy-MM-dd
-      // In the future don't format date for the api
-      // Save it as it is then just format it on the front end
-      const dld = entryFields.date.split('-');          //-----------------------------  returns ['yyyy', 'MM', 'dd']
-      entryFields.date = new Date(dld[0], dld[1] - 1, dld[2]) //-----------------------------  create new date from submitted form
-      .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})// format the date like we did in Glassdale this time using options in the second argument return 'Oct 31, 2021' for example...
-      .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021' 
-
-      // The form is a string where the user should separate each concept with a comma which will end up as an array ['HTML', 'CSS', 'JavaScript']
-      entryFields.concepts = entryFields.concepts.split(', ');
-
-      // The Mood value is capitalized 'foo' would become 'Foo'
-      entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
-
-      // Once the entry is created clear the fields
-      setJournalFormFields(newEntry);
-
-      // Tuck away the journal form
-      formModal.classList.remove('is-active');
-
-      debugger;
-      // This part should look familiar
-      // saveJournalEntry(entryFields)
-      // .then(JournalList);
-
-    }
-  });
+  button.addEventListener('click', saveEvent);
 }
-
-
-const newLogModal = document.querySelector('.button.new-log');
-newLogModal.addEventListener('click', createEntry);
-
 
 export const setJournalFormFields = (journal) => {
   
@@ -179,7 +182,7 @@ export const setJournalFormFields = (journal) => {
       // Append newly created elements underneath the concept input area 
       conceptTag.append(concept, deleteButton);
       tagBlock.append(conceptTag);
-      document.querySelector('.entry-concepts').append(tagBlock)
+      document.querySelector('.entry-concepts').append(tagBlock);
     });
   }
 
@@ -204,7 +207,7 @@ export const getJournalFormFields = () => {
     date: document.querySelector('#dev-log-date').value,
 
     // dev-log-concepts
-    concepts: Array.from(document.querySelectorAll('#dev-log-concepts .block .tag')).map( concept => concept.value ),
+    concepts: Array.from(document.querySelectorAll('.entry-concepts .block .tag')).map( concept => concept.textContent ),
 
     // dev-log-mood
     mood: document.querySelector('#dev-log-mood').value
@@ -300,3 +303,6 @@ export const JournalForm = () => {
   </div>
   `;
 }
+
+const newLogModal = document.querySelector('.button.new-log');
+newLogModal.addEventListener('click', createEntry);
