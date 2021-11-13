@@ -73,6 +73,87 @@
         "JSON"
       ],
       "mood": "Confident"
+    },
+    {
+      "id": 8,
+      "entry": "testing new concepts",
+      "date": "Nov 10 2021",
+      "concepts": [
+        "test",
+        "another"
+      ],
+      "mood": "Unsure"
+    },
+    {
+      "id": 10,
+      "entry": "another should not be a concept",
+      "date": "Nov 10 2021",
+      "concepts": [
+        "test",
+        "post"
+      ],
+      "mood": "Meh"
+    },
+    {
+      "id": 11,
+      "entry": "my posting event ran twice on my last post and this one may produce three posts. one for this post and two more because i haven't refreshed the page since my initial test post. i'm introducing bugs with this one for sure...",
+      "date": "Nov 10 2021",
+      "concepts": [
+        "somethings",
+        "wrong"
+      ],
+      "mood": "Disappointed"
+    },
+    {
+      "id": 12,
+      "entry": "hope i dont see duplicates again... i really dont like those",
+      "date": "Nov 12 2021",
+      "concepts": [
+        "testing"
+      ],
+      "mood": "Unsure"
+    }
+  ],
+  "concepts": [
+    {
+      "id": 1,
+      "name": "HTML"
+    },
+    {
+      "id": 2,
+      "name": "CSS"
+    },
+    {
+      "id": 3,
+      "name": "JavaScript"
+    },
+    {
+      "id": 4,
+      "name": "JSON"
+    },
+    {
+      "id": 5,
+      "name": "Jest"
+    },
+    {
+      "id": 6,
+      "name": "Unit Testing"
+    },
+    {
+      "id": 7,
+      "name": "React"
+    },
+    {
+      "id": 8,
+      "name": "Git"
+    },
+    {
+      "id": 9,
+      "name": "Terminal"
+    },
+    {
+      "id": 10,
+      "name": "Scripting"
     }
   ]
 }
