@@ -113,5 +113,47 @@
       ],
       "mood": "Unsure"
     }
+  ],
+  "concepts": [
+    {
+      "id": 1,
+      "name": "HTML"
+    },
+    {
+      "id": 2,
+      "name": "CSS"
+    },
+    {
+      "id": 3,
+      "name": "JavaScript"
+    },
+    {
+      "id": 4,
+      "name": "JSON"
+    },
+    {
+      "id": 5,
+      "name": "Jest"
+    },
+    {
+      "id": 6,
+      "name": "Unit Testing"
+    },
+    {
+      "id": 7,
+      "name": "React"
+    },
+    {
+      "id": 8,
+      "name": "Git"
+    },
+    {
+      "id": 9,
+      "name": "Terminal"
+    },
+    {
+      "id": 10,
+      "name": "Scripting"
+    }
   ]
 }

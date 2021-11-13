@@ -1,0 +1,36 @@
+.tag.is-light.concept_html {
+  background-color: #ea642d;
+  color: #fff;
+}
+
+.tag.is-light.concept_css {
+  background-color: #0b70b2;
+  color: #fff;
+}
+
+.tag.is-light.concept_javascript {
+  background-color: #d3b32b;
+  color: #fff;
+}
+
+.tag.is-light.concept_react {
+  background-color: #5ed3f3;
+  color: #666;
+}
+
+.tag.is-light.concept_json {
+  border: 1px solid #575757;
+  background-color: #9d9a9b;
+  color: #fff;
+}
+
+.tag.is-light.concept_jest {
+  background-color: #95424f;
+  color: #fff;
+}
+
+.tag.is-light.concept_unit-testing {
+  background-color: #e8782f;
+  color: #fff;
+}
+

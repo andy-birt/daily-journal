@@ -132,10 +132,7 @@ export const setJournalFormBody = () => {
   const dld = entryFields.date.split('-');          //-----------------------------  returns ['yyyy', 'MM', 'dd']
   entryFields.date = new Date(dld[0], dld[1] - 1, dld[2]) //-----------------------------  create new date from submitted form
   .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})// format the date like we did in Glassdale this time using options in the second argument return 'Oct 31, 2021' for example...
-  .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021' 
-
-  // The form is a string where the user should separate each concept with a comma which will end up as an array ['HTML', 'CSS', 'JavaScript']
-  // entryFields.concepts = entryFields.concepts.split(', ');
+  .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021'
 
   // The Mood value is capitalized 'foo' would become 'Foo'
   entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
@@ -253,7 +250,7 @@ export const JournalForm = () => {
             <fieldset class="field">
               <label class="label" for="dev-log-concepts">Concepts Covered</label>
               <div class="control">
-                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts}" placeholder="Type out concept then ',' to save it" autocomplete="off">
+                <input class="input" type="text" name="dev-log-concepts" id="dev-log-concepts" value="${entry.concepts}" placeholder="Type out concept then a comma ',' to save it" autocomplete="off">
                 <div class="entry-concepts"></div>
               </div>
             </fieldset>

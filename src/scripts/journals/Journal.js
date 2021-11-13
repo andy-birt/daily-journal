@@ -1,3 +1,5 @@
+import { Concept } from "../concepts/Concept.js";
+// import { useConcepts } from "../concepts/ConceptDataProvider.js";
 import { deleteJournalEntry, useJournalEntries, updateJournalEntry } from "./JournalDataProvider.js";
 import { setJournalFormFields, setJournalFormBody, formFieldValidation } from "./JournalForm.js";
 import { JournalList } from "./JournalList.js";
@@ -50,22 +52,9 @@ entryEvent.addEventListener('click', e => {
   }
 });
 
-// Concept List
-
-const Concepts = (concept) => {
-  // TODO: Consider CSS classes to extend for different color options
-  return `
-    <span class="tag is-primary is-light">${concept}</span>
-  `;
-}
-
 // Journal Component
 
 export const Journal = (journal) => {
-
-  // Make some mini concept components for the journals concepts
-  let conceptsHTML = '';
-  journal.concepts.forEach(concept => conceptsHTML += Concepts(concept));
 
   return `
   <li id="journal-${journal.id}" class="box">
@@ -75,7 +64,7 @@ export const Journal = (journal) => {
           <h2 class="title"><a href="#">${journal.date}</a></h2>
           <h3 class="subtitle">${journal.mood}</h3>
           <div class="tags">
-            ${conceptsHTML}
+            ${journal.concepts.map( concept => Concept(concept)).join('')}
           </div>
         </div>
         <div class="column is-9">
