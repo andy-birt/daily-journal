@@ -1,7 +1,7 @@
 import { saveJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
-const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [], entry: '', mood: 'undefined'};
+const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [], entry: '', mood: { label: 'undefined'} };
 
 const closeModalFromBackgroundClick = (e) => {
   e.target.parentNode.classList.remove('is-active');
@@ -186,9 +186,8 @@ export const setJournalFormFields = (journal) => {
       document.querySelector('.entry-concepts').append(tagBlock);
     });
   }
-
   // dev-log-mood
-  document.querySelector(`#dev-log-mood option[value=${mood.toLowerCase()}]`).selected = true;
+  document.querySelector(`#dev-log-mood option[value="${mood.id}"]`).selected = true;
 
   if (id !== '') button.value = "Edit Entry";
   else button.value = "Save Entry";
@@ -276,17 +275,14 @@ export const JournalForm = () => {
           <!-- Mood select form group -->
           <fieldset class="field">
             <label class="label" for="dev-log-mood">Current Mood</label>
-            <div class="select is-fullwidth">
-              <select name="dev-log-mood" id="dev-log-mood">
-                <option value="undefined">How are you feeling?</option>
-                <option value="stoked">Stoked</option>
-                <option value="confident">Confident</option>
-                <option value="meh">Meh</option>
-                <option value="unsure">Unsure</option>
-                <option value="disappointed">Disappointed</option>
-                <option value="pissed">Pissed</option>
-              </select>
-            </div>
+            <div class="select is-fullwidth mood-select-container"></div>
+            
+          </fieldset>
+
+          <!-- Instructor select form group -->
+          <fieldset class="field">
+            <label class="label" for="dev-log-instructor">Instructor</label>
+            <div class="select is-fullwidth instructor-select-container"></div>
             
           </fieldset>
 

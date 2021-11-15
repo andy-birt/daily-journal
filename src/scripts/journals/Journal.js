@@ -62,7 +62,7 @@ export const Journal = (journal) => {
       <div class="columns">
         <div class="column is-2">
           <h2 class="title"><a href="#">${journal.date}</a></h2>
-          <h3 class="subtitle">${journal.mood}</h3>
+          <h3 class="subtitle">${journal.mood.label}</h3>
           <div class="tags">
             ${journal.concepts.map( concept => Concept(concept)).join('')}
           </div>
