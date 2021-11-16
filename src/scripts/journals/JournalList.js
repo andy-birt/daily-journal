@@ -14,13 +14,15 @@ const optionClick = e => {
     el.className = "dropdown is-right";
 }
 
-export const JournalList = () => {
+export const JournalList = (prop, val) => {
   
   getJournalEntries().then(() => {
 
     let html = '';
     
-    const journalEntries = useJournalEntries().sort((a, b) => new Date(b.date) - new Date(a.date));
+    const journalEntries = prop ? 
+      useJournalEntries().filter(entry => entry[prop] === val).sort((a, b) => new Date(b.date) - new Date(a.date)) :
+      useJournalEntries().sort((a, b) => new Date(b.date) - new Date(a.date));
     const el = document.querySelector(".entries");
     
     journalEntries.forEach(entry => html += Journal(entry));

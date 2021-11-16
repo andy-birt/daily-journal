@@ -215,10 +215,10 @@ export const getJournalFormFields = () => {
     concepts: Array.from(document.querySelectorAll('.entry-concepts .block .tag')).map( concept => concept.textContent ),
 
     // dev-log-mood
-    moodId: document.querySelector('#dev-log-mood').value,
+    moodId: +document.querySelector('#dev-log-mood').value,
 
     // instructor-select
-    instructorId: document.querySelector('#instructor-select').value
+    instructorId: +document.querySelector('#instructor-select').value
 
   };
 }
