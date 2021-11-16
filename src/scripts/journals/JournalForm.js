@@ -1,7 +1,7 @@
 import { saveJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
-const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [], entry: '', mood: { label: 'undefined'} };
+const newEntry = {id: '', date: new Date().toLocaleDateString('en-CA'), concepts: [], entry: '', mood: { label: 'undefined'}, instructor: { id: 0 } };
 
 const closeModalFromBackgroundClick = (e) => {
   e.target.parentNode.classList.remove('is-active');
@@ -135,7 +135,7 @@ export const setJournalFormBody = () => {
   .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021'
 
   // The Mood value is capitalized 'foo' would become 'Foo'
-  entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
+  // entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
 
   // Once the entry is created clear the fields
   setJournalFormFields(newEntry);
@@ -147,8 +147,10 @@ export const setJournalFormBody = () => {
 
 export const setJournalFormFields = (journal) => {
   
-  const { id, entry, date, concepts, mood } = journal;
+  const { id, entry, date, concepts, mood, instructor } = journal;
   const button = document.querySelector('.button');
+
+  const instructorId = instructor ? instructor.id : 0;
   
   // dev-log-id
   document.querySelector('#dev-log-id').value = id;
@@ -189,6 +191,9 @@ export const setJournalFormFields = (journal) => {
   // dev-log-mood
   document.querySelector(`#dev-log-mood option[value="${mood.id}"]`).selected = true;
 
+  // instructor-select
+  document.querySelector(`#instructor-select option[value="${instructorId}"]`).selected = true;
+
   if (id !== '') button.value = "Edit Entry";
   else button.value = "Save Entry";
 
@@ -210,7 +215,10 @@ export const getJournalFormFields = () => {
     concepts: Array.from(document.querySelectorAll('.entry-concepts .block .tag')).map( concept => concept.textContent ),
 
     // dev-log-mood
-    mood: document.querySelector('#dev-log-mood').value
+    moodId: document.querySelector('#dev-log-mood').value,
+
+    // instructor-select
+    instructorId: document.querySelector('#instructor-select').value
 
   };
 }
