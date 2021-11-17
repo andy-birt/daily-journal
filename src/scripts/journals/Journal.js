@@ -59,9 +59,9 @@ export const Journal = (journal) => {
   <li id="journal-${journal.id}" class="box">
     <article class="entry">
       <div class="columns">
-        <div class="column is-2">
+        <div class="column is-3">
           <h2 class="title"><a href="#">${journal.date}</a></h2>
-          <h3 class="subtitle">${journal.mood.label}</h3>
+          <h3 class="subtitle">${journal.mood.emoji} ${journal.mood.label}</h3>
           <div class="tags">
             ${journal.concepts.map( concept => Concept(concept)).join('')}
           </div>
@@ -69,7 +69,7 @@ export const Journal = (journal) => {
             journal.instructor ? `<h4>${journal.instructor.first_name} ${journal.instructor.last_name}</h4>` : '<span></span>'
           }
         </div>
-        <div class="column is-9">
+        <div class="column is-8">
           <p>${journal.entry}</p>
         </div>
         <div class="column options">

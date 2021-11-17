@@ -201,27 +201,33 @@
   "moods": [
     {
       "id": 1,
-      "label": "Pissed"
+      "label": "Pissed",
+      "emoji": "&#129324;"
     },
     {
       "id": 2,
-      "label": "Disappointed"
+      "label": "Defeated",
+      "emoji": "&#128542;"
     },
     {
       "id": 3,
-      "label": "Unsure"
+      "label": "Unsure",
+      "emoji": "&#129300;"
     },
     {
       "id": 4,
-      "label": "Meh"
+      "label": "Meh",
+      "emoji": "&#128529;"
     },
     {
       "id": 5,
-      "label": "Confident"
+      "label": "Confident",
+      "emoji": "&#128526;"
     },
     {
       "id": 6,
-      "label": "Stoked"
+      "label": "Stoked",
+      "emoji": "&#128527;"
     }
   ],
   "instructors": [
