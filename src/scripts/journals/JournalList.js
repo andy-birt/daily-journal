@@ -3,6 +3,8 @@
 // Import journal data and the component it uses.
 import { useJournalEntries, getJournalEntries } from "./JournalDataProvider.js";
 import { Journal } from "./Journal.js";
+import { getConcepts, useConcepts } from "../concepts/ConceptDataProvider.js";
+import { getEntryConcepts, useEntryConcepts } from "../entryconcepts/EntryConceptData.js";
 
 // The following is basically handling events for buttons
 const optionClick = e => {
@@ -16,16 +18,22 @@ const optionClick = e => {
 
 export const JournalList = (prop, val) => {
   
-  getJournalEntries().then(() => {
+  getJournalEntries()
+  .then(getConcepts)
+  .then(getEntryConcepts)
+  .then(() => {
 
     let html = '';
     
     const journalEntries = prop ? 
       useJournalEntries().filter(entry => entry[prop] === val).sort((a, b) => new Date(b.date) - new Date(a.date)) :
       useJournalEntries().sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    const concepts = useConcepts();
+    const entryConcepts = useEntryConcepts();
     const el = document.querySelector(".entries");
     
-    journalEntries.forEach(entry => html += Journal(entry));
+    html += render(journalEntries, concepts, entryConcepts);
 
     el.innerHTML = html;
     
@@ -36,4 +44,12 @@ export const JournalList = (prop, val) => {
 
   });
 
+}
+
+const render = (entriesToRender, allConcepts, allEntryConcepts) => {
+  return entriesToRender.map(entry => {
+    const entrysConcepts = allEntryConcepts.filter(ec => ec.entryId === entry.id);
+    const concepts = entrysConcepts.map(ec => allConcepts.find(concept => concept.id === ec.conceptId));
+    return Journal(entry, concepts);
+  }).join('');
 }

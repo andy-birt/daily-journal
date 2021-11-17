@@ -3,9 +3,6 @@
     {
       "id": 1,
       "date": "Oct 13 2021",
-      "concepts": [
-        "CSS"
-      ],
       "entry": "I wanted to add a transition effect to my entry form so when you click on 'New Log' the form comes up with an animation. I'm not sure I like it but I got it to do something at least. I might try doing something else with it another time. I was honestly pretty frustrated trying to make it work the way I wanted, which it still doesn't really.",
       "moodId": 4,
       "instructorId": 0
@@ -13,11 +10,6 @@
     {
       "id": 2,
       "date": "Oct 14 2021",
-      "concepts": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
       "entry": "Made progress on Martins's Aquarium, finished the Fish component and it's displaying to the DOM. I also setup Tip and Location data as well as components so when I have that data I can finish those components as well. They're already working in the project but they dont have any content. Tommy was knocking ketchup... his code is ketchup...",
       "moodId": 5,
       "instructorId": 0
@@ -25,11 +17,6 @@
     {
       "id": 3,
       "date": "Oct 15 2021",
-      "concepts": [
-        "JavaScript",
-        "Jest",
-        "Unit Testing"
-      ],
       "entry": "I did the sowing chapter for Modern Farm. It was relatively easy to do, however, today has been exhausting looking for my tiny little nuances. For example, I spent a little bit of time getting the plant seeds function to populate the plant array simply because I used lowercase letters in my switch statement rather than capitalizing the seed names and that took some time for me to catch. Also I was helping my teammates with their projects where I almost missed that they forgot to import and call their component function in the main js module. What a way to end the week.",
       "moodId": 3,
       "instructorId": 0
@@ -37,11 +24,6 @@
     {
       "id": 4,
       "date": "Oct 21 2021",
-      "concepts": [
-        "HTML",
-        "CSS",
-        "JavaScript"
-      ],
       "entry": "It's been a while since my last update. I was assigned to team Red Jaguar to reproduce something similar to the previous group project of travel brochure except this time the task was to automate much of the html building process into separate JS files. One of our teammates was out for most of the project due to some technical issues however, with our project structure, he was able to finish his page within the first hour or so of class and we managed to finish the project and have retro before lunch. I think it went relatively well! I just finished our daily assignment of taking some data provided by Sarah and creating components out of that data and I read tomorrows assignment, Glassdale Intro",
       "moodId": 6,
       "instructorId": 0
@@ -50,21 +32,11 @@
       "id": 5,
       "entry": "We have covered using json-server as a prototype database which we can perform CRUD (create, read, update, delete) operations with our journal entries. This is my first post since using json-server rather than hard-coding into my data-provider array. Also, I have some work to do on my resume.\n\nUpdate: Testing out the update feature. If you see this then it works.",
       "date": "Nov 5 2021",
-      "concepts": [
-        "JavaScript",
-        "JSON"
-      ],
       "moodId": 6,
       "instructorId": 0
     },
     {
       "date": "Oct 26 2021",
-      "concepts": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "JSON"
-      ],
       "entry": "I've had some trouble targeting certain elements in my journal list which I have corrected by placing all of my selectors and handlers within the promise function that gets the journal entries so I can eventually edit or delete entries",
       "moodId": 6,
       "id": 6,
@@ -74,10 +46,6 @@
       "id": 7,
       "entry": "It's been a while since my last post. A little over a week. I was working on a group project 'Holiday Road' and was assigned to the 'mashed-potatoes' group. We used the tools acquired throughout the course to put this project together but with some twists. This project used different apis. Four, not including the one we were running ourselves via json-server. It was a really fun project and I got to put myself to the test. I got the parks api up and running and Steven got the weather api going. We integrated the data so that the weather api was using gps coords of the parks locations when one was selected so that it would display a five day forecast. I helped him with putting together a multiselect for attractions and eateries even though we didn't use them when saving itineraries but had we more time we could've made that happen. No biggie. Amanda made the ui presentable. Jonah worked on itineraries and I put together the search feature. In the end we only missed two stretch goals which I guess it's not important how many we didn't get rather how many we did get. Also I made some nice spaghetti code. Like Todd Howards likes to say, \"it just works\". Maybe next week I'll get to catch up on some of the other solo projects. I'm looking forward to the next group project, though also nervous because you never know what can go wrong. I may be working with totally different people from before and the next project is considered difficult according to Sarah. I'm still up for the challenge though.",
       "date": "Nov 6 2021",
-      "concepts": [
-        "JavaScript",
-        "JSON"
-      ],
       "moodId": 5,
       "instructorId": 0
     },
@@ -85,10 +53,6 @@
       "id": 8,
       "entry": "testing new concepts",
       "date": "Nov 10 2021",
-      "concepts": [
-        "test",
-        "another"
-      ],
       "moodId": 3,
       "instructorId": 0
     },
@@ -96,10 +60,6 @@
       "id": 10,
       "entry": "another should not be a concept",
       "date": "Nov 10 2021",
-      "concepts": [
-        "test",
-        "post"
-      ],
       "moodId": 4,
       "instructorId": 0
     },
@@ -107,10 +67,6 @@
       "id": 11,
       "entry": "my posting event ran twice on my last post and this one may produce three posts. one for this post and two more because i haven't refreshed the page since my initial test post. i'm introducing bugs with this one for sure...",
       "date": "Nov 10 2021",
-      "concepts": [
-        "somethings",
-        "wrong"
-      ],
       "moodId": 2,
       "instructorId": 0
     },
@@ -118,9 +74,6 @@
       "id": 12,
       "entry": "hope i dont see duplicates again... i really dont like those",
       "date": "Nov 12 2021",
-      "concepts": [
-        "testing"
-      ],
       "moodId": 3,
       "instructorId": 0
     },
@@ -128,10 +81,6 @@
       "id": 13,
       "entry": "Yesterday's assignment was to add a criminal select to notes that would establish a one to many relationship between notes and criminals. After that, set up the same thing with mood and entries which I've completed but also I added the ability to reference an instructor. Hopefully, this entry saves to the db since I've not yet tested. Update this entry.",
       "date": "Nov 16 2021",
-      "concepts": [
-        "JSON",
-        "JavaScript"
-      ],
       "moodId": 3,
       "instructorId": 2
     },
@@ -139,9 +88,6 @@
       "id": 14,
       "entry": "Testing another entry to make sure it's saving the ids of instructor/mood. Update: Posting works for creating a new entry. Try again with update. Second Update: Noticed a bug where I updated this post and an invalid journal entry was created as well which threw a 500 for the db. Time to investigate... Try this..",
       "date": "Nov 16 2021",
-      "concepts": [
-        "JSON"
-      ],
       "moodId": 3,
       "instructorId": 2
     },
@@ -149,9 +95,6 @@
       "id": 15,
       "entry": "Let's see if I can reproduce this bug by creating a new log first then editing one in the same page session.",
       "date": "Nov 16 2021",
-      "concepts": [
-        "JSON"
-      ],
       "moodId": 3,
       "instructorId": 1
     }
@@ -196,6 +139,177 @@
     {
       "id": 10,
       "name": "Scripting"
+    },
+    {
+      "id": 11,
+      "name": "test"
+    },
+    {
+      "id": 12,
+      "name": "another"
+    },
+    {
+      "id": 13,
+      "name": "post"
+    },
+    {
+      "id": 14,
+      "name": "somethings"
+    },
+    {
+      "id": 15,
+      "name": "wrong"
+    },
+    {
+      "id": 16,
+      "name": "testing"
+    }
+  ],
+  "entryconcepts": [
+    {
+      "id": 1,
+      "entryId": 1,
+      "conceptId": 2
+    },
+    {
+      "id": 2,
+      "entryId": 2,
+      "conceptId": 1
+    },
+    {
+      "id": 3,
+      "entryId": 2,
+      "conceptId": 2
+    },
+    {
+      "id": 4,
+      "entryId": 2,
+      "conceptId": 3
+    },
+    {
+      "id": 5,
+      "entryId": 3,
+      "conceptId": 3
+    },
+    {
+      "id": 6,
+      "entryId": 3,
+      "conceptId": 5
+    },
+    {
+      "id": 7,
+      "entryId": 3,
+      "conceptId": 6
+    },
+    {
+      "id": 8,
+      "entryId": 4,
+      "conceptId": 1
+    },
+    {
+      "id": 9,
+      "entryId": 4,
+      "conceptId": 2
+    },
+    {
+      "id": 10,
+      "entryId": 4,
+      "conceptId": 3
+    },
+    {
+      "id": 11,
+      "entryId": 5,
+      "conceptId": 3
+    },
+    {
+      "id": 12,
+      "entryId": 5,
+      "conceptId": 4
+    },
+    {
+      "id": 13,
+      "entryId": 6,
+      "conceptId": 1
+    },
+    {
+      "id": 14,
+      "entryId": 6,
+      "conceptId": 2
+    },
+    {
+      "id": 15,
+      "entryId": 6,
+      "conceptId": 3
+    },
+    {
+      "id": 16,
+      "entryId": 6,
+      "conceptId": 4
+    },
+    {
+      "id": 17,
+      "entryId": 7,
+      "conceptId": 3
+    },
+    {
+      "id": 18,
+      "entryId": 7,
+      "conceptId": 4
+    },
+    {
+      "id": 19,
+      "entryId": 8,
+      "conceptId": 11
+    },
+    {
+      "id": 20,
+      "entryId": 8,
+      "conceptId": 12
+    },
+    {
+      "id": 21,
+      "entryId": 10,
+      "conceptId": 11
+    },
+    {
+      "id": 22,
+      "entryId": 10,
+      "conceptId": 13
+    },
+    {
+      "id": 23,
+      "entryId": 11,
+      "conceptId": 14
+    },
+    {
+      "id": 24,
+      "entryId": 11,
+      "conceptId": 15
+    },
+    {
+      "id": 25,
+      "entryId": 12,
+      "conceptId": 16
+    },
+    {
+      "id": 26,
+      "entryId": 13,
+      "conceptId": 3
+    },
+    {
+      "id": 27,
+      "entryId": 13,
+      "conceptId": 4
+    },
+    {
+      "id": 28,
+      "entryId": 14,
+      "conceptId": 4
+    },
+    {
+      "id": 29,
+      "entryId": 15,
+      "conceptId": 4
     }
   ],
   "moods": [

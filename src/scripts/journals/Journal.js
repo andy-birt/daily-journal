@@ -54,7 +54,7 @@ entryEvent.addEventListener('click', e => {
 
 // Journal Component
 
-export const Journal = (journal) => {
+export const Journal = (journal, concepts) => {
   return `
   <li id="journal-${journal.id}" class="box">
     <article class="entry">
@@ -63,7 +63,7 @@ export const Journal = (journal) => {
           <h2 class="title"><a href="#">${journal.date}</a></h2>
           <h3 class="subtitle">${journal.mood.emoji} ${journal.mood.label}</h3>
           <div class="tags">
-            ${journal.concepts.map( concept => Concept(concept)).join('')}
+            ${concepts.map( concept => Concept(concept)).join('')}
           </div>
           ${
             journal.instructor ? `<h4>${journal.instructor.first_name} ${journal.instructor.last_name}</h4>` : '<span></span>'
