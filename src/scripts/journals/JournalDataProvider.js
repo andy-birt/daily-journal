@@ -21,7 +21,7 @@ export const saveJournalEntry = entry => {
     },
     body: JSON.stringify(entry)
   })
-  .then(getJournalEntries);
+  .then(res => res.json());
 }
 
 export const updateJournalEntry = entry => {
