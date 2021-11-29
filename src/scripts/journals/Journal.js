@@ -1,5 +1,6 @@
 import { Concept } from "../concepts/Concept.js";
-// import { useConcepts } from "../concepts/ConceptDataProvider.js";
+import { useConcepts } from "../concepts/ConceptDataProvider.js";
+import { useEntryConcepts } from "../entryconcepts/EntryConceptData.js";
 import { deleteJournalEntry, useJournalEntries, updateJournalEntry } from "./JournalDataProvider.js";
 import { setJournalFormFields, setJournalFormBody, formFieldValidation } from "./JournalForm.js";
 import { JournalList } from "./JournalList.js";
@@ -9,13 +10,16 @@ const entryEvent = document.querySelector('.entries');
 entryEvent.addEventListener('click', e => {
   
   if (e.target.id.startsWith('editEntry')) {
-    const entryID = e.path[0].id.split('--')[1];
-    const entry = useJournalEntries().find( entry => entry.id.toString() === entryID );
+    const entryID = +e.path[0].id.split('--')[1];
+    const entry = useJournalEntries().find( entry => entry.id === entryID );
     entry.date = new Date().toLocaleDateString('en-CA');
+
+    const entryConcepts = useEntryConcepts().filter(concept => concept.entryId === entry.id);
+    const concepts = useConcepts().filter(concept => entryConcepts.find(ec => concept.id === ec.conceptId));
 
     const button = document.querySelector('.submit');
 
-    setJournalFormFields(entry);
+    setJournalFormFields(entry, concepts);
 
     button.disabled = true;
     
