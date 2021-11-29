@@ -9,3 +9,8 @@ export const getConcepts = () => {
   .then(res => res.json())
   .then(data => concepts = data);
 }
+
+export const searchConcept = concept => {
+  return fetch(`http://localhost:8088/concepts?name=${concept}`)
+  .then(res => res.json());
+}
