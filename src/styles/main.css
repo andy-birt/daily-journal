@@ -32,7 +32,7 @@ a {
 
 /* Filter Entries by Mood */
 
-fieldset {
+.mood-filter-container fieldset {
   border: 1px solid #b5b5b5;
   margin: 1em;
   padding: 1em;
