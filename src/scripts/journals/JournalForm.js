@@ -1,3 +1,5 @@
+import { saveConcept, searchConcept } from "../concepts/ConceptDataProvider.js";
+import { saveEntryConcept } from "../entryconcepts/EntryConceptData.js";
 import { saveJournalEntry } from "./JournalDataProvider.js";
 import { JournalList } from "./JournalList.js";
 
@@ -21,16 +23,31 @@ const closeModalByButton = (e) => {
   }
 }
 
-const saveEvent = (e) => {
+const saveEntryEvent = (e) => {
   if (e.target.value.startsWith('Save')) {
     // Prevent Default behavior for a form to be submitted
     // In this case to refresh the page
     // Handle the form submission using AJAX request
     e.preventDefault();
+    const { concepts } = getJournalFormFields();
     const newJournalEntry = setJournalFormBody();
 
     // This part should look familiar
     saveJournalEntry(newJournalEntry)
+    // After creating the entry let's get the response so we can use the id
+    .then(entry => {
+      
+      return concepts.map(concept => {
+        return searchConcept(concept).then(result => {
+          debugger;
+          if (!result.length) {
+            return saveConcept({ name: concept }).then(concept => saveEntryConcept({ entryId: entry.id, conceptId: concept.id }));
+          } else {
+            return saveEntryConcept({ entryId: entry.id, conceptId: result[0].id });
+          }
+        })
+      })
+    })
     .then(JournalList);
   }
 }
@@ -62,7 +79,7 @@ const conceptsEvent = (e) => {
     e.target.value = '';
     
     // Append newly created elements underneath the concept input area 
-    conceptTag.append(concept, deleteButton);
+    conceptTag.append(concept.trim(), deleteButton);
     tagBlock.append(conceptTag);
     document.querySelector('.entry-concepts').append(tagBlock);
 
@@ -93,6 +110,7 @@ const createEntry = () => {
 
   // Revalidate form when values change
   formModal.addEventListener('change', formFieldValidation);
+  formModal.addEventListener('keyup', formFieldValidation);
 
   // As user types out concepts a comma will make a badge out of the concept typed
   // The tag will have a delete button to remove tag from the concept list
@@ -102,7 +120,7 @@ const createEntry = () => {
   formModal.addEventListener('click', closeModalByButton);
  
   // When user clicks on 'Save/Edit Entry'
-  button.addEventListener('click', saveEvent);
+  button.addEventListener('click', saveEntryEvent);
 }
 
 export const formFieldValidation = (e) => {
@@ -122,7 +140,8 @@ export const formFieldValidation = (e) => {
 }
 
 export const setJournalFormBody = () => {
-  const entryFields = getJournalFormFields();
+  const { id, entry, date, moodId, instructorId } = getJournalFormFields();
+  const entryFields = { id, entry, date, moodId, instructorId };
   const formModal = document.querySelector('.modal');
   
   // Set up the new entry body
@@ -134,11 +153,8 @@ export const setJournalFormBody = () => {
   .toLocaleDateString('en-US', { year: "numeric", day: "numeric", month: "short"})// format the date like we did in Glassdale this time using options in the second argument return 'Oct 31, 2021' for example...
   .split(',').join('');                             //-----------------------------  the split would return ['Oct 31', ' 2021'], then finally join 'Oct 31 2021'
 
-  // The Mood value is capitalized 'foo' would become 'Foo'
-  // entryFields.mood = entryFields.mood.charAt(0).toUpperCase() + entryFields.mood.slice(1);
-
   // Once the entry is created clear the fields
-  setJournalFormFields(newEntry);
+  setJournalFormFields(newEntry, []);
 
   // Tuck away the journal form
   formModal.classList.remove('is-active');
