@@ -72,7 +72,7 @@ const conceptsEvent = (e) => {
 const createEntry = () => {
 
   // Assume the user wants all fields cleared to create a new entry
-  setJournalFormFields(newEntry);
+  setJournalFormFields(newEntry, []);
 
   const formModal = document.querySelector('.modal');
   const conceptsText = document.querySelector('#dev-log-concepts');
@@ -110,7 +110,7 @@ export const formFieldValidation = (e) => {
 
   // Check for form value validity
   const entryFields = getJournalFormFields();
-  if (entryFields.date === 'Invalid Date' || entryFields.concepts.length < 1 || entryFields.entry === '' || entryFields.mood === 'undefined' || e.target.value === '') {
+  if (entryFields.date === 'Invalid Date' || entryFields.concepts.length < 1 || entryFields.entry === '' || entryFields.moodId === 'undefined' || e.target.value === '') {
     
     button.disabled = true;
     
@@ -145,9 +145,9 @@ export const setJournalFormBody = () => {
   return entryFields;
 }
 
-export const setJournalFormFields = (journal) => {
+export const setJournalFormFields = (journal, concepts) => {
   
-  const { id, entry, date, concepts, mood, instructor } = journal;
+  const { id, entry, date, mood, instructor } = journal;
   const button = document.querySelector('.button');
 
   const instructorId = instructor ? instructor.id : 0;
@@ -183,7 +183,7 @@ export const setJournalFormFields = (journal) => {
       deleteButton.className = 'delete is-small';
       
       // Append newly created elements underneath the concept input area 
-      conceptTag.append(concept, deleteButton);
+      conceptTag.append(concept.name, deleteButton);
       tagBlock.append(conceptTag);
       document.querySelector('.entry-concepts').append(tagBlock);
     });
