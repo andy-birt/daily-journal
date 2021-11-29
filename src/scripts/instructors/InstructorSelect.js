@@ -5,7 +5,7 @@ const render = instructorCollection => {
     <select id="instructor-select">
       <option value="0">Who the instructor be?</option>
       ${
-        instructorCollection.map(instructor => `<option value="${instructor.id}">${instructor.first_name} ${instructor.last_name}</option>`).join('')
+        instructorCollection.map(instructor => instructor.id ? `<option value="${instructor.id}">${instructor.first_name} ${instructor.last_name}</option>` : '').join('')
       }
     </select>
   `;
